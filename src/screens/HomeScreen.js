@@ -1,21 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
+  FlatList,
   TouchableOpacity,
   ScrollView,
 } from "react-native";
 import RowItem from "../components/RowItem";
 
 const HomeScreen = () => {
+  const [list, setList] = useState([]);
+
+  const removeRow = (key) => {
+    const updatedList = list.filter(item => item.key !== key);
+    setList(updatedList);
+    
+  };
+
   return (
     <View style={styles.viewStyle}>
-      <ScrollView>
-        <RowItem></RowItem>
-      </ScrollView>
+      <FlatList data={list} 
+      renderItem={({item }) => (
+        <RowItem item={item} onDelete={removeRow}/>
+      )}
+       
+      />
 
-      <TouchableOpacity style={styles.newToDoButtonStyle}>
+      <TouchableOpacity
+        style={styles.newToDoButtonStyle}
+        onPress={() => {
+          setList([...list,{ key: String(list.length+1)}]);
+        }}
+      >
         <Text style={{ fontSize: 30 }}>+</Text>
       </TouchableOpacity>
     </View>
