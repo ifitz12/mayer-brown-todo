@@ -5,32 +5,44 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  ScrollView,
 } from "react-native";
 import RowItem from "../components/RowItem";
+import SearchBar from "../components/SearchBar";
 
 const HomeScreen = () => {
   const [list, setList] = useState([]);
 
   const removeRow = (key) => {
-    const updatedList = list.filter(item => item.key !== key);
+    const updatedList = list.filter((item) => item.key !== key);
     setList(updatedList);
-    
+  };
+
+  const handleTextChange = (key, newText) => {
+    const updatedList = list.map((item) =>
+      item.key === key ? { ...item, text: newText } : item
+    );
+    setList(updatedList);
   };
 
   return (
     <View style={styles.viewStyle}>
-      <FlatList data={list} 
-      renderItem={({item }) => (
-        <RowItem item={item} onDelete={removeRow}/>
-      )}
-       
+      <FlatList
+        data={list}
+        renderItem={({ item }) => (
+          <RowItem
+            item={item}
+            text={item.key}
+            onChangeText={handleTextChange}
+            onDelete={removeRow}
+          />
+        )}
       />
 
       <TouchableOpacity
         style={styles.newToDoButtonStyle}
         onPress={() => {
-          setList([...list,{ key: String(list.length+1)}]);
+          const newKey = String(list.length + 1);
+          setList([...list, { key: newKey, text: "" }]);
         }}
       >
         <Text style={{ fontSize: 30 }}>+</Text>
@@ -41,8 +53,6 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   newToDoButtonStyle: {
-    borderWidth: 1,
-    borderColor: "#50e3c2",
     backgroundColor: "#50e3c2",
     alignItems: "center",
     justifyContent: "center",

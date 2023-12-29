@@ -1,19 +1,29 @@
 import React from "react";
-import { View, StyleSheet, TextInput, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 
-const RowItem = ({item, onDelete}) => {
-    console.log(item)
+const RowItem = ({ item, onChangeText, onDelete }) => {
+ 
   return (
     <View style={styles.viewContainer}>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.textInputStyle} placeholder="Enter Todo" />
-
-    <TouchableOpacity onPress={() => onDelete(item.key)}>
-        <Image
-          style={styles.buttonStyle}
-          source={require("../../assets/trashIcon.png")}
-          
+        <TextInput
+          style={styles.textInputStyle}
+          placeholder="Enter Todo"
+          value={item.text}
+          onChangeText={(newText) => onChangeText(item.key, newText)}
         />
+
+        <TouchableOpacity onPress={() => onDelete(item.key)}>
+          <Image
+            style={styles.buttonStyle}
+            source={require("../../assets/trashIcon.png")}
+          />
         </TouchableOpacity>
       </View>
     </View>
