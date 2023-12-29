@@ -25,11 +25,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     flexDirection: "row",
   },
+  
   inputStyle: {
     flex: 1,
     fontSize: 18,
     left: 15,
-  },
+  }
 });
 
 export default SearchBar;

@@ -13,11 +13,14 @@ const HomeScreen = () => {
   const [list, setList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  //Returns a new list that excludes the element containing the provided key
   const removeRow = (key) => {
     const updatedList = list.filter((item) => item.key !== key);
     setList(updatedList);
   };
 
+  /*Updates the text for a specific rowItem based on key. 
+  If the given key matches an element in our list, the text is updated, otherwise it is ignored. */
   const handleTextChange = (key, newText) => {
     const updatedList = list.map((item) =>
       item.key === key ? { ...item, text: newText } : item
@@ -25,6 +28,8 @@ const HomeScreen = () => {
     setList(updatedList);
   };
 
+  /*When search bar is not empty, list will be filtered 
+  and return items that contain the given search term*/
   const filteredList = list.filter((item) =>
     item.text.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -46,7 +51,6 @@ const HomeScreen = () => {
           />
         )}
       />
-
       <TouchableOpacity
         style={styles.newToDoButtonStyle}
         onPress={() => {
@@ -54,7 +58,7 @@ const HomeScreen = () => {
           setList([...list, { key: newKey, text: "" }]);
         }}
       >
-        <Text style={{ fontSize: 30 }}>+</Text>
+        <Text style={styles.toDoButtonTextStyle}>+</Text>
       </TouchableOpacity>
     </View>
   );
@@ -62,7 +66,7 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   newToDoButtonStyle: {
-    backgroundColor: "#50e3c2",
+    backgroundColor: "#674A31",
     alignItems: "center",
     justifyContent: "center",
     width: 70,
@@ -72,6 +76,11 @@ const styles = StyleSheet.create({
     margin: 30,
     right: 10,
     bottom: 20,
+  },
+
+  toDoButtonTextStyle: {
+    fontSize: 30,
+    color: "white",
   },
 
   viewStyle: {
