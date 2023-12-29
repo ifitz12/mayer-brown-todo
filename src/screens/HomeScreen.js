@@ -11,6 +11,7 @@ import SearchBar from "../components/SearchBar";
 
 const HomeScreen = () => {
   const [list, setList] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const removeRow = (key) => {
     const updatedList = list.filter((item) => item.key !== key);
@@ -24,10 +25,18 @@ const HomeScreen = () => {
     setList(updatedList);
   };
 
+  const filteredList = list.filter((item) =>
+    item.text.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <View style={styles.viewStyle}>
+      <SearchBar
+        term={searchTerm}
+        onTermChange={(text) => setSearchTerm(text)}
+      ></SearchBar>
       <FlatList
-        data={list}
+        data={filteredList}
         renderItem={({ item }) => (
           <RowItem
             item={item}
